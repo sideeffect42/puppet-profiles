@@ -1,0 +1,13 @@
+[main]
+  environment = <%= @environment %>
+
+[agent]
+  server = <%= @servername %>
+  ca_server = <%= @servername %>
+
+[master]
+  server = <%= @servername %>
+  ca_server = <%= @servername %>
+  storeconfigs = true
+  storeconfigs_backend = puppetdb
+
