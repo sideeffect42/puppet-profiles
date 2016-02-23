@@ -4,10 +4,6 @@
   - yaml
 :hierarchy:
   - "environments/%{environment}/hieradata/hosts/%{::fqdn}"
-  - "environments/%{environment}/hieradata/solution/%{::_solution}/stage/%{::_stage}/role/%{::_role}"
-  - "environments/%{environment}/hieradata/solution/%{::_solution}/stage/%{::_stage}/common"
-  - "environments/%{environment}/hieradata/solution/%{::_solution}/role/%{::_role}"
-  - "environments/%{environment}/hieradata/solution/%{::_solution}/common"
   - "environments/%{environment}/hieradata/role/%{::_role}"
   - "environments/%{environment}/hieradata/stage/%{::_stage}"
   - "environments/%{environment}/hieradata/datacenter/%{::_dc}"
@@ -16,18 +12,6 @@
   - "environments/%{environment}/hieradata/dist/%{::lsbdistid}"
   - "environments/%{environment}/hieradata/os/%{::osfamily}"
   - "environments/%{environment}/hieradata/common"
-  - "hieraglobal/%{environment}/solution/%{::_solution}/stage/%{::_stage}/role/%{::_role}"
-  - "hieraglobal/%{environment}/solution/%{::_solution}/stage/%{::_stage}/common"
-  - "hieraglobal/%{environment}/solution/%{::_solution}/role/%{::_role}"
-  - "hieraglobal/%{environment}/solution/%{::_solution}/common"
-  - "hieraglobal/%{environment}/role/%{::_role}"
-  - "hieraglobal/%{environment}/stage/%{::_stage}"
-  - "hieraglobal/%{environment}/datacenter/%{::_dc}"
-  - "hieraglobal/%{environment}/vertical/%{::_vertical}"
-  - "hieraglobal/%{environment}/dist/%{::lsbdistid}/%{::lsbdistcodename}"
-  - "hieraglobal/%{environment}/dist/%{::lsbdistid}"
-  - "hieraglobal/%{environment}/os/%{::osfamily}"
-  - "hieraglobal/%{environment}/common"
 
 :merge_behavior: deeper
 
