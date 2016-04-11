@@ -19,11 +19,4 @@ class profiles::puppetmaster {
     notify  => Service['puppetserver'],
   }
 
-  cron { 'puppetserver-restart':
-    command => '/sbin/reboot',
-    user    => 'root',
-    hour    => 3,
-    minute  => 33,
-  }
-
 }
