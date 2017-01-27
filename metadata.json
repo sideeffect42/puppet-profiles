@@ -1,0 +1,25 @@
+{
+	"name": "puppet-profiles",
+	"version": "1.0.0",
+	"author": "automaticserver",
+	"source": "https://github.com/automaticserver/puppet-profiles",
+	"operatingsystem_support": [
+		{
+			"operatingsystem": "Ubuntu",
+			"operatingsystemrelease": [
+				"14.04",
+				"16.04"
+			]
+		}
+	],
+	"dependencies": [
+		{ "name": "puppetlabs/apt", "version_requirement": "2.3.0" },
+		{ "name": "puppetlabs/ntp", "version_requirement": "6.0.0" },
+		{ "name": "puppetlabs/concat", "version_requirement": "2.2.0" },
+		{ "name": "spiete/ssh", "version_requirement": "0.4.2" },
+		{ "name": "ghoneycutt/hosts", "version_requirement": "2.4.1" },
+		{ "name": "thias/resolvconf", "version_requirement": "0.0.3" },
+		{ "name": "saz/sudo", "version_requirement": "4.1.0" },
+		{ "name": "camptocamp/accounts", "version_requirement": "1.9.0" }
+	]
+}
