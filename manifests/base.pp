@@ -59,7 +59,14 @@ class profiles::base {
 ##############################################
 ##############################################
 
-  ensure_packages(hiera_array("${name}::packages"))
+  $install_packages = hiera_array("${name}::packages", undef)
+  if $install_packages {
+    ensure_packages($install_packages)
+  }
+  $remove_packages = hiera_array("${name}::packages_remove", undef)
+  if $remove_packages {
+    ensure_packages($remove_packages, {ensure => absent,})
+  }
 
   $ssh_keygen = hiera_hash('ssh_keygen', undef)
   if $ssh_keygen {
