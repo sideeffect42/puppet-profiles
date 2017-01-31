@@ -18,5 +18,8 @@ class profiles::puppetmaster {
     content => template("$module_name/puppetmaster/puppet_default.erb"),
     notify  => Service['puppetserver'],
   }
-
+  file { '/etc/puppetlabs/puppetserver/conf.d/product.conf':
+    content => template("$module_name/puppetmaster/puppetserver_product_conf.erb"),
+    notify => Service['puppetserver'],
+  }
 }
