@@ -36,8 +36,8 @@ class profiles::puppetmaster (
 
 
   # Foreman integration
-  $puppet_confdir = '/etc/puppetlabs/puppet'
-  $puppet_ssldir = "$puppet_confdir/ssl"
+  $puppet_confdir = "${settings::confdir}"
+  $puppet_ssldir = "${settings::ssldir}"
 
   if $foreman_integration {
     file { "$puppet_confdir/foreman.yaml":
