@@ -28,23 +28,27 @@ class profiles::puppetmaster (
     notify => Service['puppetserver'],
   }
 
+  $puppet_confdir = '/etc/puppetlabs/puppet'
+  $puppet_ssldir = "$puppet_confdir/ssl"
+  $foreman_url = 'http://localhost/'
+
   if $foreman_integration {
-    file { '/etc/puppetlabs/puppet/foreman.yaml':
+    file { "$puppet_confdir/foreman.yaml":
       ensure  => file,
       content => template("$module_name/puppetmaster/foreman.yaml.erb"),
     }
 
-    file { '/etc/puppetlabs/puppet/node.rb':
+    file { "$puppet_confdir/node.rb":
       ensure  => file,
       source  => "puppet:///modules/$module_name/puppetmaster/node.rb",
       mode    => '+x',
       notify  => Service['puppetserver'],
     }
   } else {
-    file { '/etc/puppetlabs/puppet/foreman.yaml':
+    file { "$puppet_confdir/foreman.yaml":
       ensure => absent,
     }
-    file { '/etc/puppetlabs/puppet/node.rb':
+    file { "$puppet_confdir/node.rb":
       ensure => absent,
     }
   }
