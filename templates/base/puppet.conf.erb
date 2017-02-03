@@ -4,6 +4,7 @@
 [agent]
   server = <%= @servername %>
   ca_server = <%= @servername %>
+  report = true
 
 [master]
   server = <%= @servername %>
@@ -13,4 +14,5 @@
 <% if scope.lookupvar('::profiles::puppetmaster::foreman_integration') -%>
   external_nodes = <%= scope.lookupvar('::settings::confdir') %>/node.rb
   node_terminus = exec
+  reports = puppetdb, foreman
 <% end -%>
