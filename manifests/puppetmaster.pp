@@ -62,6 +62,14 @@ class profiles::puppetmaster (
       owner   => 'puppet',
       group   => 'puppet',
     }
+
+    file { '/opt/puppetlabs/puppet/lib/ruby/vendor_ruby/puppet/reports/foreman.rb':
+      ensure => file,
+      source => "puppet:///modules/$module_name/puppetmaster/foreman-report_v2.rb",
+      owner  => '0',
+      group  => '0',
+      notify => Service['puppetserver'],
+    }
   } else {
     file { "$puppet_confdir/foreman.yaml":
       ensure => absent,
