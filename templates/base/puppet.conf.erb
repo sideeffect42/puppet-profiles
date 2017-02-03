@@ -10,4 +10,7 @@
   ca_server = <%= @servername %>
   storeconfigs = true
   storeconfigs_backend = puppetdb
-
+<% if scope.lookupvar('::profiles::puppetmaster::foreman_integration') -%>
+  external_nodes = <%= scope.lookupvar('::settings::confdir') %>/node.rb
+  node_terminus = exec
+<% end -%>
