@@ -51,6 +51,17 @@ class profiles::puppetmaster (
       mode    => '+x',
       notify  => Service['puppetserver'],
     }
+
+    file { "$puppet_confdir/yaml":
+      ensure  => directory,
+      owner   => 'puppet',
+      group   => 'puppet',
+    }
+    file { "$puppet_confdir/yaml/foreman":
+      ensure  => directory,
+      owner   => 'puppet',
+      group   => 'puppet',
+    }
   } else {
     file { "$puppet_confdir/foreman.yaml":
       ensure => absent,
