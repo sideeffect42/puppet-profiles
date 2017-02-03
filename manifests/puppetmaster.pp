@@ -1,6 +1,7 @@
 class profiles::puppetmaster (
   $autosign_domain = true,
-  $foreman_integration = false
+  $foreman_integration = false,
+  $foreman_url = 'http://localhost/' # only needed when using Foreman integration
 ) {
 
   service { 'puppetserver':
@@ -8,6 +9,7 @@ class profiles::puppetmaster (
     enable => true,
   }
 
+  # certificate autosigning
   file_line { 'autosign.conf':
     ensure  => $autosign_domain ? { true => present, default => absent },
     path    => "${settings::confdir}/autosign.conf",
@@ -15,22 +17,27 @@ class profiles::puppetmaster (
     notify  => Service['puppetserver'],
   }
 
+  # symlink r10k into PATH
   file { '/opt/puppetlabs/bin/r10k':
     ensure => 'link',
     target => '/opt/puppetlabs/puppet/bin/r10k'
   }
+
   file { '/etc/default/puppetserver':
     content => template("$module_name/puppetmaster/puppet_default.erb"),
     notify  => Service['puppetserver'],
   }
+
+  # disable puppet analytic data collection
   file { '/etc/puppetlabs/puppetserver/conf.d/product.conf':
     content => template("$module_name/puppetmaster/puppetserver_product_conf.erb"),
     notify => Service['puppetserver'],
   }
 
+
+  # Foreman integration
   $puppet_confdir = '/etc/puppetlabs/puppet'
   $puppet_ssldir = "$puppet_confdir/ssl"
-  $foreman_url = 'http://localhost/'
 
   if $foreman_integration {
     file { "$puppet_confdir/foreman.yaml":
