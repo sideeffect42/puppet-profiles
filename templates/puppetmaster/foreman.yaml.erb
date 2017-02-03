@@ -1,0 +1,12 @@
+---
+:url: '<%= scope.lookupvar('::profiles::puppetmaster::foreman::url') %>'
+:ssl_ca: '<%= scope.lookupvar('::profiles::puppetmaster::ssldir') %>/certs/ca.pem'
+:ssl_cert: '<%= scope.lookupvar('::profiles::puppetmaster::ssldir') %>/certs/<%= @hostname %>.<%= @domain %>.pem'
+:ssl_key: '<%= scope.lookupvar('::profiles::puppetmaster::ssldir') %>/private_keys/<%= @hostname %>.<%= @domain %>.pem'
+
+# Advanced settings
+:puppetdir: '<%= scope.lookupvar('::profiles::puppetmaster::ssldir') %>'
+:puppetuser: 'puppet'
+:facts: true
+:timeout: 10
+:threads: null
