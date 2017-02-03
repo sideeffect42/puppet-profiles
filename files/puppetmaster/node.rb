@@ -1,4 +1,4 @@
-#!/usr/bin/env ruby
+#!/opt/puppetlabs/puppet/bin/ruby
 
 # Script usually acts as an ENC for a single host, with the certname supplied as argument
 #   if 'facts' is true, the YAML facts for the host are uploaded
