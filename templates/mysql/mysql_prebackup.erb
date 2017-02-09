@@ -1,0 +1,31 @@
+#!/bin/bash
+
+#
+# don't change "set -e" and "set -u", this script deletes stuff
+#
+set -e
+set -u
+
+BASE_DIR=/tmp
+PREFIX="mysqldump_$(hostname --fqdn)_"
+
+# just to be sure check some stuff
+cd $BASE_DIR || exit 1
+[ $PWD == / ] && exit 1
+[ $PWD != $BASE_DIR ] && exit 1
+
+rm -Rf ${PREFIX}_*
+
+DIR=$(mktemp -d $BASE_DIR/${PREFIX}_$(date +%F_%T)_XXXXXXXX)
+cd "$DIR"
+
+mysql -N -B -e 'show databases' |
+egrep -v '(^#|^mysql$|^information_schema$|performance_schema$)' |
+while read db
+do
+	DATE=$(date +%F_%T)
+	FILE="$DIR/mysqldump_$(hostname --fqdn)_${db}.$DATE.tar.gz.gpg"
+	mysqldump $db | gzip -c | gpg -e -r <%= @recipient %> > "$FILE"
+	md5sum "$FILE" > "${FILE}.md5"
+	#mysqldump $db | gzip -c | pv > /dev/null
+done
