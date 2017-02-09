@@ -26,7 +26,7 @@ class profiles::mysql (
   $replication_user   = hiera('replication_user', undef)
   $replication_pass   = hiera('replication_pass', undef)
 
-  if ${::fqdn} == $replication_master {
+  if $::fqdn == $replication_master {
     $options = deep_merge($common_options, $master_options)
 
     mysql_user { "${replication_user}@%":
@@ -50,12 +50,6 @@ class profiles::mysql (
       "${settings::ssldir}/private_keys/${::fqdn}.pem":
         group => $mysql_group;
     }
-  }
-
-  class { '::mysql::server':
-    package_ensure   => 'present',
-    root_password    => $root_pass,
-    override_options => $options,
   }
 
   if $databases {
