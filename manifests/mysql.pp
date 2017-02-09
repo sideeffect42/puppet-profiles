@@ -6,7 +6,7 @@ class profiles::mysql (
   $databases   = hiera_hash('mysql::db', undef)
   $recipient   = $gpg_recipient
 
-  $common_options = hiera_hash('mysql::options', undef)
+  $common_options = deep_merge(hiera_hash('mysql::options', undef), hiera_hash('mariadb::server::override_options', undef))
   $master_options = {
     'mysqld' => {
       innodb_flush_log_at_trx_commit => '1',
