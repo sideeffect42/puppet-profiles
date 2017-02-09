@@ -1,4 +1,5 @@
 class profiles::puppetmaster (
+  $puppetserver_version = '2.5',
   $autosign_domain = true,
   $foreman_integration = false,
   $foreman_url = 'http://localhost/' # only needed when using Foreman integration
