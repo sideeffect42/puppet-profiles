@@ -1,4 +1,6 @@
-class profiles::base {
+class profiles::base (
+  $root_password = true
+) {
 
   include stdlib
   include ntp
@@ -30,6 +32,14 @@ class profiles::base {
     accounts   => hiera_hash('accounts::accounts', {}),
     usergroups => hiera_hash('accounts::usergroups', {}),
     ssh_keys   => hiera_hash('accounts::ssh_keys', {}),
+  }
+
+  if $root_password == false {
+    exec { 'delete_root_password':
+      command   => '/usr/bin/passwd -d root',
+      unless    => '/usr/bin/test "x" = "x$(/bin/grep "^root" /etc/shadow | /usr/bin/cut -d: -f2)"',
+      logoutput => true,
+    }
   }
 
   $sudoers = hiera_hash('sudo::conf', undef)
