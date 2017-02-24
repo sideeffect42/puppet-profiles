@@ -2,18 +2,6 @@ class profiles::openldap {
 
   include ::ldap::server
 
-  # put gem binary someplace in the $PATH
-  file { '/usr/local/bin/gem':
-    ensure => link,
-    target => '/opt/puppetlabs/puppet/bin/gem',
-  }
-
-  # prerequisite for resource "ldap_entry"
-  package { 'net-ldap':
-    ensure   => present,
-    provider => 'gem',
-  }
-
   file {
     "${settings::ssldir}/private_keys":               group => 'openldap';
     "${settings::ssldir}/private_keys/${::fqdn}.pem": group => 'openldap';
@@ -35,7 +23,20 @@ class profiles::openldap {
     password => $adminpw,
   }
 
-  $ldap_entries = hiera_hash('ldap::entries')
-  create_resources('ldap_entry', $ldap_entries, $ldap_defaults)
+  $ldap_entries = hiera_hash('ldap::entries', undef)
+  if $ldap_entries {
+    # put gem binary someplace in the $PATH
+    file { '/usr/local/bin/gem':
+      ensure => link,
+      target => '/opt/puppetlabs/puppet/bin/gem',
+    }
 
+    # prerequisite for resource "ldap_entry"
+    package { 'net-ldap':
+      ensure   => present,
+      provider => 'gem',
+    }
+
+    create_resources('ldap_entry', $ldap_entries, $ldap_defaults)
+  }
 }
