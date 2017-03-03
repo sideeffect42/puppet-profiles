@@ -22,6 +22,8 @@ class profiles::ldap_account_manager(
   elsif $https {
     apache::vhost { 'ldap-account-manager':
       port            => 80,
+      docroot         => '/usr/share/ldap-account-manager',
+      servername      => "$vhost_domain",
       redirect_status => 'permanent',
       redirect_dest   => $vhost_domain ? {
         undef   => "https://$::fqdn/",
