@@ -1,4 +1,6 @@
-class profiles::ldap_account_manager {
+class profiles::ldap_account_manager(
+  $vhost_domain = undef,
+) {
   # configure Apache httpd web server
   class { '::apache':
     default_vhost => false,
@@ -8,12 +10,15 @@ class profiles::ldap_account_manager {
   include ::apache::mod::rewrite
 
   apache::vhost { 'ldap-account-manager':
-    port => 80,
-    docroot => '/usr/share/ldap-account-manager',
+    port       => 80,
+    docroot    => '/usr/share/ldap-account-manager',
+    servername => "$vhost_domain",
   }
   apache::vhost { 'ssl-ldap-account-manager':
-    port => 443,
-    docroot => '/usr/share/ldap-account-manager',
+    ssl        => true,
+    port       => 443,
+    docroot    => '/usr/share/ldap-account-manager',
+    servername => "$vhost_domain",
   }
 
   $php_prefix = 'php' # TODO: set correctly based on system version
